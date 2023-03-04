@@ -29,7 +29,7 @@ export const Points = (): JSX.Element => {
 
   const dataGridActions: GridColDef[] = [
     {
-      field: 'manager-leves',
+      field: 'manager-points',
       type: 'actions',
       sortable: false,
       headerName: '',
