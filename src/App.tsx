@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import { Home, Points } from '@/pages'
+import { Home, ListAll, MapPoints, Parameters, Points } from '@/pages'
 
 function App (): JSX.Element {
   return (
@@ -7,6 +7,9 @@ function App (): JSX.Element {
         <Routes>
             <Route path="/" element={<Home/>} />
             <Route path="/points" element={<Points/>} />
+            <Route path="/parameters" element={<Parameters/>} />
+            <Route path="/list-all" element={<ListAll/>} />
+            <Route path="/map-points" element={<MapPoints/>} />
         </Routes>
       </BrowserRouter>
   )

@@ -1,12 +1,82 @@
-import { Box } from '@/components'
-import { Link } from 'react-router-dom'
+import { Box, MenuCard, Typography } from '@/components'
+import lottiePoint from '../../assets/lotties/point.json'
+import lottieParameters from '../../assets/lotties/parameters.json'
+import lottieCollections from '../../assets/lotties/collections.json'
+import lottieSearch from '../../assets/lotties/search.json'
 
 export const Home = (): JSX.Element => {
+  const menuOptions = [
+    {
+      name: 'Pontos de coleta',
+      description: 'Listagem, edição e remoção de pontos de coleta',
+      lottie: lottiePoint,
+      path: '/points'
+    },
+    {
+      name: 'Parâmetros',
+      description: 'Listagem, edição e remoção de parâmetros',
+      lottie: lottieParameters,
+      path: '/parameters'
+    },
+    {
+      name: 'Listar todos',
+      description: 'Listagem de todos pontos e seus parâmetros',
+      lottie: lottieSearch,
+      path: '/list-all'
+    },
+    {
+      name: 'Mapa de pontos',
+      description: 'Verificar em mapa todos os pontos de coleta',
+      lottie: lottieCollections,
+      path: '/map-points'
+    }
+  ]
+
   return (
-    <Box>
-      <Link to="/">
-        <p>Home</p>
-      </Link>
+    <Box
+      sx={{
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+        textAlign: 'center'
+      }}
+    >
+      <Typography
+        sx={{
+          color: '#DD5E0F',
+          fontWeight: 600,
+          textShadow: '1px 1px 1px #121211'
+        }}
+        gutterBottom variant="h2">
+        Coleta Segura
+      </Typography>
+      <Box
+        sx={{
+          display: 'flex',
+          flexDirection: 'row',
+          flexWrap: 'wrap',
+          alignItems: 'center',
+          width: '700px',
+          justifyContent: 'center',
+          '@media (max-width: 768px)': {
+            width: '100%',
+            '> div': {
+              marginBottom: '20px'
+            }
+          }
+        }}
+      >
+        {menuOptions.map((menu) => (
+          <MenuCard
+            key={menu.name}
+            name={menu.name}
+            description={menu.description}
+            lottie={menu.lottie}
+            path={menu.path}
+          />
+        ))}
+      </Box>
     </Box>
   )
 }

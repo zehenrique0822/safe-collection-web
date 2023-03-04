@@ -1,2 +1,5 @@
 export * from './home'
 export * from './points'
+export * from './parameters'
+export * from './listAll'
+export * from './mapPoints'
