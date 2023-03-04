@@ -13,7 +13,7 @@ function App (): JSX.Element {
             <Route path="/map-points" element={<MapPoints/>} />
         </Routes>
         <Toaster
-          position="top-right"
+          position="top-center"
         />
       </BrowserRouter>
   )

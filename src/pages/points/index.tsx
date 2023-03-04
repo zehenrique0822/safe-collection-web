@@ -1,5 +1,8 @@
-import { AppLoadingProgress, Box, Button, DataGrid, type GridColDef } from '@/components'
+import { AppLoadingProgress, Box, Button, DataGrid, Dialog, Toast, Tooltip, Typography, type GridColDef } from '@/components'
+import DeleteIcon from '@mui/icons-material/Delete'
+import AddCircleIcon from '@mui/icons-material/AddCircle'
 import { http } from '@/services'
+import { IconButton } from '@mui/material'
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 
@@ -14,6 +17,7 @@ interface IPoints {
 export const Points = (): JSX.Element => {
   const [points, setPoints] = useState<IPoints[]>([])
   const [loading, setLoading] = useState(false)
+  const [dialog, setDialog] = useState<any>({ open: false })
 
   const getPoints = async (): Promise<void> => {
     try {
@@ -25,6 +29,36 @@ export const Points = (): JSX.Element => {
     } finally {
       setLoading(false)
     }
+  }
+
+  const handleOpenDialog = (id: number): void => {
+    setDialog({
+      ...dialog,
+      id,
+      open: true,
+      title: 'O ponto será removido!',
+      message: 'Tem certeza de que deseja remover?',
+      handleConfirm,
+      handleCancel
+    })
+  }
+
+  const handleConfirm = async (id: number): Promise<void> => {
+    try {
+      await http.delete(`/points/delete/${id}`)
+      setPoints(prevPoints => prevPoints.filter((point) => point.id !== id))
+      Toast({ message: 'Ponto removido!', type: 'success' })
+    } catch (error: any) {
+      const message = error?.response?.data.error ?? 'Erro, tente novamante!'
+      Toast({ message, type: 'error' })
+    }
+  }
+
+  const handleCancel = async (): Promise<void> => {
+    setDialog({
+      ...dialog,
+      open: false
+    })
   }
 
   const dataGridActions: GridColDef[] = [
@@ -42,17 +76,15 @@ export const Points = (): JSX.Element => {
               gap: 0.5
             }}
           >
-            <Button
-              sx={{
+            <Tooltip title="Remover" >
+              <IconButton sx={{
                 width: '20px',
                 fontSize: '10px'
               }}
-              variant="contained"
-              size="small"
-              onClick={() => { console.log(params?.row) }}
-            >
-              Remover
-            </Button>
+                onClick={() => { handleOpenDialog(params?.row?.id) }}>
+                <DeleteIcon />
+              </IconButton>
+            </Tooltip>
           </Box>
         )
       },
@@ -88,24 +120,54 @@ export const Points = (): JSX.Element => {
       }} >
       <Box
         sx={{
-          height: '669px',
-          width: '700px',
+          height: '80%',
+          width: '1000px',
           '@media (max-width: 768px)': {
             flexDirection: 'column',
             width: '95%'
           },
           display: 'flex',
           flexDirection: 'column',
-          padding: 0
+          padding: 0,
+          marginBottom: '20px',
+          justifyContent: 'space-between'
         }}
       >
         <Box p={3}
           flex={1}
           sx={{
-            padding: '0 24px',
+            padding: '35px 24px',
             boxShadow: 'rgba(0, 0, 0, 0.24) 0px 3px 8px',
-            borderRadius: '10px'
+            borderRadius: '10px',
+            '& > div:nth-child(2)': {
+              height: '88%'
+            }
           }}>
+          <Box sx={{
+            display: 'flex',
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'space-between'
+          }}>
+            <Typography
+              sx={{
+                color: '#DD5E0F',
+                fontWeight: 600,
+                textShadow: '1px 1px 1px #121211'
+              }}
+              gutterBottom variant="h2">
+              Pontos
+            </Typography>
+            <Tooltip title="Adicionar" >
+              <IconButton sx={{
+                width: '25px',
+                fontSize: '15px'
+              }}
+              >
+                <AddCircleIcon />
+              </IconButton>
+            </Tooltip>
+          </Box>
           <DataGrid
             columns={dataGridColumns}
             rows={points ?? []}
@@ -122,7 +184,9 @@ export const Points = (): JSX.Element => {
           variant="contained"
         >
           VOLTAR
-        </Button></Link>
+        </Button>
+      </Link>
+      <Dialog dialog={dialog} setDialog={setDialog} />
     </ Box>
   )
 }
