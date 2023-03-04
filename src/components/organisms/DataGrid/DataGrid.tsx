@@ -22,13 +22,11 @@ const QuickSearchToolbar = (): JSX.Element => {
 export const DataGrid = ({ rows, columns, hideFooter = false, autoHeight = false }: DataGridProps): JSX.Element => {
   return (
     <DataGridMui
-
       sx={{
         '& .MuiDataGrid-columnSeparator': {
           visibility: 'hidden'
         }
       }}
-
       disableColumnMenu
       rows={rows}
       columns={columns}
