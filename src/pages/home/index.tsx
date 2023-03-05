@@ -1,8 +1,8 @@
 import { Box, MenuCard, Typography } from '@/components'
 import lottiePoint from '../../assets/lotties/point.json'
 import lottieParameters from '../../assets/lotties/parameters.json'
+import lottieMapCollections from '../../assets/lotties/map-collections.json'
 import lottieCollections from '../../assets/lotties/collections.json'
-import lottieSearch from '../../assets/lotties/search.json'
 
 export const Home = (): JSX.Element => {
   const menuOptions = [
@@ -19,15 +19,15 @@ export const Home = (): JSX.Element => {
       path: '/parameters'
     },
     {
-      name: 'Listar todos',
-      description: 'Listagem de todos pontos e seus parâmetros',
-      lottie: lottieSearch,
+      name: 'Coletas',
+      description: 'Listagem, edição e remoção coletas',
+      lottie: lottieCollections,
       path: '/list-all'
     },
     {
-      name: 'Mapa de pontos',
-      description: 'Verificar em mapa todos os pontos de coleta',
-      lottie: lottieCollections,
+      name: 'Listar todos',
+      description: 'Listagem de todos pontos e seus parâmetros',
+      lottie: lottieMapCollections,
       path: '/map-points'
     }
   ]
