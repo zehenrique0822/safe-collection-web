@@ -1,23 +1,39 @@
-import { AppLoadingProgress, Box, Button, DataGrid, Dialog, Toast, Tooltip, Typography, type GridColDef } from '@/components'
-import DeleteIcon from '@mui/icons-material/Delete'
+import { AppLoadingProgress, Box, Button, DataGrid, Dialog, PointFormModal, Toast, Tooltip, Typography, type GridColDef } from '@/components'
 import AddCircleIcon from '@mui/icons-material/AddCircle'
+import DeleteIcon from '@mui/icons-material/Delete'
+import EditIcon from '@mui/icons-material/Edit'
 import { http } from '@/services'
 import { IconButton } from '@mui/material'
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 
-interface IPoints {
+export interface IPoint {
   id: number
   name: string
   address: string
   latitude: number
-  longitutde: number
+  longitude: number
 }
 
 export const Points = (): JSX.Element => {
-  const [points, setPoints] = useState<IPoints[]>([])
+  const [points, setPoints] = useState<IPoint[]>([])
   const [loading, setLoading] = useState(false)
   const [dialog, setDialog] = useState<any>({ open: false })
+  const [isModalOpen, setIsModalOpen] = useState(false)
+  const [editingPoint, setEditingPoint] = useState<IPoint>()
+
+  const handleModalClose = (): void => {
+    setIsModalOpen(false)
+    setEditingPoint(undefined)
+  }
+
+  const handleEditPoint = (id?: number): void => {
+    setIsModalOpen(true)
+    if (id) {
+      const point = points.find((point) => point.id === id)
+      setEditingPoint(point)
+    }
+  }
 
   const getPoints = async (): Promise<void> => {
     try {
@@ -76,6 +92,15 @@ export const Points = (): JSX.Element => {
               gap: 0.5
             }}
           >
+            <Tooltip title="Editar" >
+              <IconButton sx={{
+                width: '20px',
+                fontSize: '10px'
+              }}
+                onClick={() => { handleEditPoint(params?.row?.id) }}>
+                <EditIcon />
+              </IconButton>
+            </Tooltip>
             <Tooltip title="Remover" >
               <IconButton sx={{
                 width: '20px',
@@ -89,7 +114,7 @@ export const Points = (): JSX.Element => {
         )
       },
       align: 'right',
-      width: 80
+      width: 100
     }
   ]
 
@@ -163,6 +188,10 @@ export const Points = (): JSX.Element => {
                 width: '25px',
                 fontSize: '15px'
               }}
+              onClick={() => {
+                setEditingPoint(undefined)
+                handleEditPoint()
+              }}
               >
                 <AddCircleIcon />
               </IconButton>
@@ -186,6 +215,12 @@ export const Points = (): JSX.Element => {
           VOLTAR
         </Button>
       </Link>
+      <PointFormModal
+        open={isModalOpen}
+        onClose={handleModalClose}
+        onSave={setPoints}
+        point={editingPoint}
+      />
       <Dialog dialog={dialog} setDialog={setDialog} />
     </ Box>
   )
