@@ -22,7 +22,7 @@ export const Home = (): JSX.Element => {
       name: 'Coletas',
       description: 'Listagem, edição e remoção coletas',
       lottie: lottieCollections,
-      path: '/list-all'
+      path: '/collections'
     },
     {
       name: 'Listar todos',

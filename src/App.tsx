@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import { Home, ListAll, MapPoints, Parameters, Points } from '@/pages'
+import { Collections, Home, MapPoints, Parameters, Points } from '@/pages'
 import { Toaster } from 'react-hot-toast'
 
 function App (): JSX.Element {
@@ -9,7 +9,7 @@ function App (): JSX.Element {
             <Route path="/" element={<Home/>} />
             <Route path="/points" element={<Points/>} />
             <Route path="/parameters" element={<Parameters/>} />
-            <Route path="/list-all" element={<ListAll/>} />
+            <Route path="/collections" element={<Collections/>} />
             <Route path="/map-points" element={<MapPoints/>} />
         </Routes>
         <Toaster
