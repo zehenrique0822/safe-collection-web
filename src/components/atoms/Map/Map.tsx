@@ -32,8 +32,6 @@ export const Map = ({ point, label, isUpdate, onChange }: Props): JSX.Element =>
     googleMapsApiKey: token
   })
 
-  const icon = { url: marker, scaledSize: new window.google.maps.Size(40, 40) }
-
   return (
     <Box
       sx={{
@@ -52,7 +50,10 @@ export const Map = ({ point, label, isUpdate, onChange }: Props): JSX.Element =>
         >
           <Marker
             position={position}
-            icon={icon}
+            icon={{
+              url: marker,
+              scaledSize: new window.google.maps.Size(40, 40)
+            }}
             draggable
             onDragEnd={(e) => {
               onChange('latitude', Number(e.latLng?.lat()))
