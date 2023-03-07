@@ -7,12 +7,29 @@ import { IconButton } from '@mui/material'
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 
+interface IParameter {
+  id: number
+  name: string
+  unit: string
+  limit: number
+}
+
+interface ICollection {
+  id: number
+  id_parameters: number
+  id_points: number
+  value: number
+  date_collect: Date
+  parameter: IParameter
+}
+
 export interface IPoint {
   id: number
   name: string
   address: string
   latitude: number
   longitude: number
+  collections: ICollection[]
 }
 
 export const Points = (): JSX.Element => {
