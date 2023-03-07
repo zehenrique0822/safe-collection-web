@@ -1,6 +1,7 @@
 import { Box } from '@/components'
 import { GoogleMap, useJsApiLoader, Marker } from '@react-google-maps/api'
-interface IGeolocation {
+import marker from '@/assets/icons/marker.png'
+export interface IGeolocation {
   latitude: number
   longitude: number
 }
@@ -17,23 +18,28 @@ export const Map = ({ point, label, isUpdate, onChange }: Props): JSX.Element =>
     lat: point.latitude || -23.555323,
     lng: point.longitude || -46.642830
   }
+
   if (!isUpdate && !point.latitude && !point.longitude) {
     navigator.geolocation.getCurrentPosition((pos) => {
       onChange('latitude', Number(pos.coords.latitude))
       onChange('longitude', Number(pos.coords.longitude))
     })
   }
+
   const token = String(import.meta.env.REACT_APP_GOOGLEMAPS)
   const { isLoaded } = useJsApiLoader({
     id: 'google-map-script',
     googleMapsApiKey: token
   })
+
+  const icon = { url: marker, scaledSize: new window.google.maps.Size(40, 40) }
+
   return (
     <Box
       sx={{
         height: '300px',
         '.map-marker': {
-          marginBottom: '40px',
+          marginTop: '-40px',
           fontWeight: '700'
         }
       }}
@@ -46,6 +52,7 @@ export const Map = ({ point, label, isUpdate, onChange }: Props): JSX.Element =>
         >
           <Marker
             position={position}
+            icon={icon}
             draggable
             onDragEnd={(e) => {
               onChange('latitude', Number(e.latLng?.lat()))
