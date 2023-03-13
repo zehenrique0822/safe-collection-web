@@ -63,7 +63,7 @@ export const CollectionFormModal = ({
       if (point) updatedCollection.point = point
       if (parameter) updatedCollection.parameter = parameter
       onSave(prevCollections => [...prevCollections, updatedCollection])
-      Toast({ message: 'Parâmetro criado!', type: 'success' })
+      Toast({ message: 'Coleta registrada!', type: 'success' })
       onClose()
     } catch (error: any) {
       const message = error?.response?.data.error ?? 'Erro, tente novamante!'
@@ -90,7 +90,7 @@ export const CollectionFormModal = ({
         )
       }
       onSave(prevCollections => updateCollection(prevCollections, updatedCollection))
-      Toast({ message: 'Parâmetro atualizado!', type: 'success' })
+      Toast({ message: 'Coleta atualizada!', type: 'success' })
       onClose()
     } catch (error: any) {
       const message = error?.response?.data.error ?? 'Erro, tente novamante!'

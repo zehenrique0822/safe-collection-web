@@ -48,44 +48,44 @@ export const MapPoints = (): JSX.Element => {
       </Typography>
       {!points?.length
         ? <Typography
-      align="center"
-      gutterBottom variant="h5">
-        Cadastre seus pontos para visualizar o mapa e listagem de pontos
-      </Typography>
-        : <>
-      <Box
-        sx={{
-          height: '500px',
-          width: '1000px',
-          '@media (max-width: 768px)': {
-            width: '100%',
-            flexDirection: 'column'
-          },
-          display: 'flex',
-          flexDirection: 'column',
-          padding: 0,
-          marginBottom: '20px',
-          justifyContent: 'space-between'
-        }}
-      >
-        <PointsListMap points={points} pointCenter={pointCenter} />
-      </ Box>
-      <Box
-        sx={{
-          width: '1000px',
-          '@media (max-width: 768px)': {
-            width: '100%'
-          }
-        }}
-      >
-        <Typography
-        align="center"
-        gutterBottom variant="h5">
-          Listagem de pontos e seus parâmetros
+          align="center"
+          gutterBottom variant="h5">
+          Cadastre seus pontos para visualizar o mapa e listagem de pontos
         </Typography>
-        <CollapsibleTablePoints points={points} setPointCenter={setPointCenter} />
-      </Box>
-      </>
+        : <>
+          <Box
+            sx={{
+              height: '500px',
+              width: '1000px',
+              '@media (max-width: 768px)': {
+                width: '100%',
+                flexDirection: 'column'
+              },
+              display: 'flex',
+              flexDirection: 'column',
+              padding: 0,
+              marginBottom: '20px',
+              justifyContent: 'space-between'
+            }}
+          >
+            <PointsListMap points={points} pointCenter={pointCenter} />
+          </ Box>
+          <Box
+            sx={{
+              width: '1000px',
+              '@media (max-width: 768px)': {
+                width: '100%'
+              }
+            }}
+          >
+            <Typography
+              align="center"
+              gutterBottom variant="h5">
+              Listagem de pontos e seus parâmetros
+            </Typography>
+            <CollapsibleTablePoints points={points} setPointCenter={setPointCenter} />
+          </Box>
+        </>
       }
       <Link style={{ textDecoration: 'none' }} to="/">
         <Button
